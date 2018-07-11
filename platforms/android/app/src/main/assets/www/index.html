@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no, width=device-width, height=device-height, viewport-fit=cover">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link type="text/css" rel="stylesheet" href="css/common.css"/>
+    <script type="text/javascript" src="js/HTTPUtil.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/LocalStorageUtil.js"></script>
+    <script type="text/javascript" src="js/IVLEEventUtil.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <title>NUS IVLE</title>
+
+    <script>
+        document.addEventListener("deviceready", onDeviceReady, false);
+        document.addEventListener("backbutton", onBackKeyDown, false);
+        function onDeviceReady() {
+
+            if (navigator.notification) { // Override default HTML alert with native dialog
+                window.alert = function (message) {
+                    navigator.notification.alert(
+                        message,    // message
+                        null,       // callback
+                        "Alert", // title
+                        'Ok'        // buttonName
+                    );
+                };
+            }
+
+            let apiToken = LocalStorageUtil.getItem("API_TOKEN");
+
+            if (apiToken !== "") {
+                IVLEEventUtil.token_validate();
+                return;
+            }
+            IVLEEventUtil.show_login_page();
+        }
+        function onBackKeyDown() {
+           if ($prevDiv !== null && $currentDiv !== null) {
+               $prevDiv.show();
+               $currentDiv.hide();
+           }
+        }
+    </script>
+
+
+</head>
+<body>
+
+
+<!-- ---------------------------------------div loading------------------------------------ -->
+<div id="divLoading" class="loadPage" style="display:none;">
+    <i></i>
+</div>
+
+
+<!-- ---------------------------------------div side bar------------------------------------ -->
+
+<div id="menu">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#menu a").click(function () {
+                $("#toggle").removeClass("open");
+                $("#menu").removeClass("opened");
+            });
+        });
+    </script>
+
+    <ul>
+        <li><a href="#"><span>Home</span></a></li>
+        <li><a href="#"><span>Student Events</span></a></li>
+        <li><a href="#"><span>My Organizer</span></a></li>
+        <li><a href="#"><span>Nearby</span></a></li>
+        <li><a href="#"><span>Staff Search</span></a></li>
+        <li><a onclick="IVLEEventUtil.logout()" href="#"><span>Logout</span></a></li>
+    </ul>
+</div>
+
+<!-- ---------------------------------------div homepage------------------------------------ -->
+<div id="divHomePage">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#toggle").click(function() {
+                $(this).toggleClass("open");
+                $("#menu").toggleClass("opened");
+            });
+
+            $("#menu a").click(function () {
+                $("#toggle").removeClass("open");
+                $("#menu").removeClass("opened");
+            });
+        });
+
+    </script>
+
+    <div class="homeTopHeader">
+        <h1 class="title">Modules</h1>
+    </div>
+
+    <div id="toggle"><span></span></div>
+
+
+    <div id="divModuleList" style="display:none;">
+        <div class="content">
+            <ul id="ulModuleList" class="module_list">
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ---------------------------------------div moduledetail------------------------------------ -->
+<div id="divModuleInfo" style="display:none;">
+    <div class="homeTopHeader">
+        <a id="btnModuleInfoBack" class="return_page" onclick="$('#divHomePage').show();$('#divModuleInfo').hide();"></a>
+        <h1 id="h1ModuleInfoTitle" class="title">Modules</h1>
+    </div>
+
+    <div class="content">
+
+        <div class="list-group">
+            <button class="list-group-item" onclick="IVLEEventUtil.show_module_course_outline()">Course Overview</button>
+            <button class="list-group-item" onclick="IVLEEventUtil.show_module_announcements()">Announcements</button>
+            <button class="list-group-item" onclick="IVLEEventUtil.show_module_workbin()">Workbin</button>
+            <button class="list-group-item" onclick="IVLEEventUtil.show_module_media_folder()">Media</button>
+            <button class="list-group-item" onclick="IVLEEventUtil.show_module_forum()">Forum</button>
+        </div>
+
+    </div>
+</div>
+
+<div id="divModuleCourseOutline" style="display:none;">
+    <div class="homeTopHeader">
+        <a id="btnModuleCourseOutlineBack" class="return_page" onclick="$('#divModuleInfo').show();$('#divModuleCourseOutline').hide();"></a>
+        <h1 id="h1ModuleCourseOutlineTitle" class="title">Modules</h1>
+    </div>
+
+    <div class="content">
+        <div>
+            <ul id="ulModuleInfoList" class="module_info_list">
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div id = "divModuleAnnouncements" style="display:none;">
+    <div class="homeTopHeader">
+        <a id="btnModuleAnnouncementsBack" class="return_page" onclick="$('#divModuleInfo').show();$('#divModuleAnnouncements').hide();"></a>
+        <h1 id="h1AnnouncementsTitle" class="title">Modules</h1>
+    </div>
+    <div class="content">
+        <button id="buttonNewAnnouncement" type="button" style="width:100%; height:50px;" class="btn btn-outline-primary">New Announcement</button>
+        <div>
+            <ul id="ulModuleAnnouncementList" class="list-group">
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div id = "divModuleWorkbin" style="display:none;">
+    <div class="homeTopHeader">
+        <a id="btnModuleWorkbinBack" class="return_page" onclick="$('#divModuleInfo').show();$('#divModuleWorkbin').hide();"></a>
+        <h1 id="h1WorkbinTitle" class="title">Modules</h1>
+    </div>
+    <div class="content">
+        <div>
+            <ul id="ulModuleWorkbinList" class="list-group">
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id = "divModuleWorkbinFolder" style="display:none;">
+    <div class="homeTopHeader">
+        <a id="btnModuleWorkbinFolderBack" class="return_page" onclick="$('#divModuleWorkbin').show();$('#divModuleWorkbinFolder').hide();"></a>
+        <h1 id="h1WorkbinFolderTitle" class="title">Modules</h1>
+    </div>
+    <div class="content">
+        <div>
+            <ul id="ulModuleWorkbinFolderList" class="list-group">
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id = "divModuleMultiMediaFolder" style="display:none;">
+    <div class="homeTopHeader">
+        <a id="btnModuleMultiMediaFolderBack" class="return_page" onclick="$('#divModuleInfo').show();$('#divModuleMultiMediaFolder').hide();"></a>
+        <h1 id="h1MultiMediaFolderTitle" class="title">Media Folder</h1>
+    </div>
+    <div class="content">
+        <div>
+            <ul id="ulModuleMultiMediaFolderList" class="list-group">
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id = "divModuleMultiMediaFolderContent" style="display:none;">
+    <div class="homeTopHeader">
+        <a id="btnModuleMultiMediaFolderContentBack" class="return_page" onclick="$('#divModuleMultiMediaFolder').show();$('#divModuleMultiMediaFolderContent').hide();"></a>
+        <h1 id="h1MultiMediaFolderContentTitle" class="title">Media Folder</h1>
+    </div>
+    <div class="content">
+        <div>
+            <ul id="ulModuleMultiMediaFolderContentList" class="list-group">
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id = "divModuleForumList" style="display:none;">
+    <div class="homeTopHeader">
+        <a id="btnModuleForumBack" class="return_page" onclick="$('#divModuleInfo').show();$('#divModuleForumList').hide();"></a>
+        <h1 id="h1MultiForumTitle" class="title">Forums</h1>
+    </div>
+    <div class="content">
+        <div>
+            <ul id="ulModuleForumList" class="workbin_list">
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id = "divModuleForumHeadingsThreadList" style="display:none;">
+    <div class="homeTopHeader">
+        <a id="btnModuleForumHeadingsThreadListBack" class="return_page" onclick="$('#divModuleForumList').show();$('#divModuleForumHeadingsThreadList').hide();"></a>
+        <h1 id="h1MultiForumHeadingsThreadListTitle" class="title">Forums</h1>
+    </div>
+    <div class="content">
+        <div>
+            <button id="buttonNewThread" type="button" style="width:100%; height:50px;" class="btn btn-outline-primary">New Thread</button>
+        </div>
+        <div>
+            <ul id="ulModuleForumHeadingsThreadList" class="list-group">
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="h5ModalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="divModalBody" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
