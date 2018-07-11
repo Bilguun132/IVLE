@@ -64,16 +64,18 @@ class IVLEEventUtil
         };
 
         HTTPUtil.get(url, data, fnSuccess, fnError);
+        IVLEEventUtil.show_module_course_outline();
     }
 
     static show_module_course_outline() {
+        divLoading.show();
         let url = "https://ivle.nus.edu.sg/api/Lapi.svc/Module_Information?APIKey=" + LAPI_KEY + "&AuthToken=" + LocalStorageUtil.getItem("API_TOKEN")+  "&CourseID=" + $selectedCourseID + "&Duration=0";
         let data = {};
-        $("#ulModuleInfoList").empty();
+        $("#divModuleInfoCourseDetails").empty();
         let fnSuccess = function (data) {
             let results = data["Results"];
             console.log(results);
-            $("#h1ModuleCourseOutlineTitle").text("Course Overview");
+       //     $("#h1ModuleCourseOutlineTitle").text("Course Overview");
             var i = 0;
             while (i < results.length) {
                 try {
@@ -81,13 +83,13 @@ class IVLEEventUtil
                     console.log(moduleInfoListHTML);
                     moduleInfoListHTML.replace("src=\"/v1/", "src=\"https://ivle.nus.edu.sg/v1/");
                     console.log(moduleInfoListHTML);
-                    $("#ulModuleInfoList").append(moduleInfoListHTML);
+                    $("#divModuleInfoCourseDetails").append(moduleInfoListHTML);
                 }
                 catch {console.log("error")}
                 i ++;
             }
-            $("#divModuleCourseOutline").show('fade');
-            $("#divModuleInfo").hide();
+        //    $("#divModuleCourseOutline").show('fade');
+         //   $("#divModuleInfo").hide();
             divLoading.hide();
         };
 
@@ -105,13 +107,8 @@ class IVLEEventUtil
         let data = {};
 
         let fnSuccess = function (data) {
-            if (data["Results"].length === 0) {
-                alert("No Announcements")
-                return false;
-            }
             let results = data["Results"];
             console.log(results);
-            $("#h1AnnouncementsTitle").text("Announcements");
             var moduleInfoAnnouncementHTML = "";
             var i = 0;
             if (results.length === 0) {
@@ -119,7 +116,10 @@ class IVLEEventUtil
             }
             else {
                 while (i < results.length) {
-                    moduleInfoAnnouncementHTML += '<li class="list-group-item"><h1>' + results[i]["Title"] + '</h1>' + results[i]["Description"] + '</li>';
+                    let postDate = new Date(results[i]["CreatedDate_js"]);
+                    moduleInfoAnnouncementHTML += '<li class="list-group-item announcement"><h1>' + results[i]["Title"] + '</h1>' + results[i]["Description"] +
+                        '<div><img src="../image/icon_clock.png"/><p>' +
+                        postDate.toLocaleString(); + '</p></div></li>';
                     i ++;
                 }
             }
@@ -194,7 +194,8 @@ class IVLEEventUtil
             var moduleInfoWorkbinHTML = "";
             var i = 0;
             while (i < results.length) {
-                moduleInfoWorkbinHTML += '<li class="list-group-item" onclick="IVLEEventUtil.show_module_workbin_files(\'' + results[i]["FolderOrder"] + '\')"><h1>' + results[i]["FolderName"] + '</h1><p>No.Of Files: ' + results[i]["FileCount"] + '</p></li>';
+                moduleInfoWorkbinHTML += '<li class="list-group-item" onclick="IVLEEventUtil.show_module_workbin_files(\'' + results[i]["FolderOrder"] + '\')"><h1>'
+                    + results[i]["FolderName"] + '</h1><p>No.Of Files: ' + results[i]["FileCount"] + '</p></li>';
                 i ++;
             }
             $("#ulModuleWorkbinList").html(moduleInfoWorkbinHTML);

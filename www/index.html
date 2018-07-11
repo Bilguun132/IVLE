@@ -4,13 +4,20 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="initial-scale=1,user-scalable=no, width=device-width, height=device-height, viewport-fit=cover">
+    <meta name="viewport"
+          content="initial-scale=1,user-scalable=no, width=device-width, height=device-height, viewport-fit=cover">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     <link type="text/css" rel="stylesheet" href="css/common.css"/>
     <script type="text/javascript" src="js/HTTPUtil.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
@@ -22,6 +29,7 @@
     <script>
         document.addEventListener("deviceready", onDeviceReady, false);
         document.addEventListener("backbutton", onBackKeyDown, false);
+
         function onDeviceReady() {
 
             if (navigator.notification) { // Override default HTML alert with native dialog
@@ -43,11 +51,12 @@
             }
             IVLEEventUtil.show_login_page();
         }
+
         function onBackKeyDown() {
-           if ($prevDiv !== null && $currentDiv !== null) {
-               $prevDiv.show();
-               $currentDiv.hide();
-           }
+            if ($prevDiv !== null && $currentDiv !== null) {
+                $prevDiv.show();
+                $currentDiv.hide();
+            }
         }
     </script>
 
@@ -86,11 +95,18 @@
 </div>
 
 <!-- ---------------------------------------div homepage------------------------------------ -->
+
+<div class="homeTopHeader">
+    <!--<h1 class="title">Modules</h1>-->
+    <img src="./image/IVLE_logo.png" class="headerLogo"/>
+    <div id="toggle"><span></span></div>
+</div>
+
 <div id="divHomePage">
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#toggle").click(function() {
+            $("#toggle").click(function () {
                 $(this).toggleClass("open");
                 $("#menu").toggleClass("opened");
             });
@@ -103,12 +119,12 @@
 
     </script>
 
-    <div class="homeTopHeader">
-        <h1 class="title">Modules</h1>
+    <div id="homePageImageDiv" class="homePageImageDiv">
+        <img src="image/home_image.png"/>
+        <div>
+            <h1>MODULES</h1>
+        </div>
     </div>
-
-    <div id="toggle"><span></span></div>
-
 
     <div id="divModuleList" style="display:none;">
         <div class="content">
@@ -119,28 +135,84 @@
 </div>
 
 <!-- ---------------------------------------div moduledetail------------------------------------ -->
-<div id="divModuleInfo" style="display:none;">
-    <div class="homeTopHeader">
-        <a id="btnModuleInfoBack" class="return_page" onclick="$('#divHomePage').show();$('#divModuleInfo').hide();"></a>
-        <h1 id="h1ModuleInfoTitle" class="title">Modules</h1>
+
+<div id="divModuleInfo" style="display:none">
+
+    <div id="modulePageImageDiv" class="homePageImageDiv">
+        <img src="image/module_info_image.png"/>
+        <div>
+            <h1>COURSE OVERVIEW</h1>
+        </div>
     </div>
 
-    <div class="content">
+    <div class="module_info_navigation">
+        <div class="row" style="width:100%; margin-left:0px">
+            <div style="width:40%;" onclick="IVLEEventUtil.show_module_announcements()">
+                <img src="image/icon_annouce.png"/>
+                <h1>
+                    Announcements
+                </h1>
+            </div>
+            <div style="width:20%;" onclick="IVLEEventUtil.show_module_workbin()">
+                <img src="image/icon_workbin.png"/>
+                <h1>
+                    Workbin
+                </h1>
+            </div>
+            <div style="width:20%;" onclick="IVLEEventUtil.show_module_media_folder()">
+                <img src="image/icon_media.png"/>
+                <h1>
+                    Media
+                </h1>
+            </div>
+            <div style="width:20%;" onclick="IVLEEventUtil.show_module_forum()">
+                <img src="image/icon_forum.png"/>
+                <h1>
+                    Forum
+                </h1>
+            </div>
+        </div>
+    </div>
 
-        <div class="list-group">
-            <button class="list-group-item" onclick="IVLEEventUtil.show_module_course_outline()">Course Overview</button>
-            <button class="list-group-item" onclick="IVLEEventUtil.show_module_announcements()">Announcements</button>
-            <button class="list-group-item" onclick="IVLEEventUtil.show_module_workbin()">Workbin</button>
-            <button class="list-group-item" onclick="IVLEEventUtil.show_module_media_folder()">Media</button>
-            <button class="list-group-item" onclick="IVLEEventUtil.show_module_forum()">Forum</button>
+    <div>
+
+        <div id="modulePageModuleInfoDiv" class="moduleInfoDiv">
+            <h1 id="h1ModuleInfoTitle">Module Name</h1>
         </div>
 
+        <div class="list-group-item moduleCourseDetailsDiv">
+            <h1>
+                COURSE DETAILS
+            </h1>
+            <button data-toggle="collapse" data-target="#courseDetailCollapse" aria-expanded="false"
+                    aria-controls="courseDetailCollapse">
+            </button>
+        </div>
+
+        <div class="collapse" id="courseDetailCollapse">
+            <div id="divModuleInfoCourseDetails" class="card card-body">
+
+            </div>
+        </div>
     </div>
+
+    <!--<div class="content">-->
+    <!---->
+    <!--<div class="list-group">-->
+    <!--<button class="list-group-item" onclick="IVLEEventUtil.show_module_course_outline()">Course Overview</button>-->
+    <!--<button class="list-group-item" onclick="IVLEEventUtil.show_module_announcements()">Announcements</button>-->
+    <!--<button class="list-group-item" onclick="IVLEEventUtil.show_module_workbin()">Workbin</button>-->
+    <!--<button class="list-group-item" onclick="IVLEEventUtil.show_module_media_folder()">Media</button>-->
+    <!--<button class="list-group-item" onclick="IVLEEventUtil.show_module_forum()">Forum</button>-->
+    <!--</div>-->
+
+    <!--</div>-->
 </div>
 
 <div id="divModuleCourseOutline" style="display:none;">
     <div class="homeTopHeader">
-        <a id="btnModuleCourseOutlineBack" class="return_page" onclick="$('#divModuleInfo').show();$('#divModuleCourseOutline').hide();"></a>
+        <a id="btnModuleCourseOutlineBack" class="return_page"
+           onclick="$('#divModuleInfo').show();$('#divModuleCourseOutline').hide();"></a>
         <h1 id="h1ModuleCourseOutlineTitle" class="title">Modules</h1>
     </div>
 
@@ -154,100 +226,115 @@
     </div>
 </div>
 
-<div id = "divModuleAnnouncements" style="display:none;">
-    <div class="homeTopHeader">
-        <a id="btnModuleAnnouncementsBack" class="return_page" onclick="$('#divModuleInfo').show();$('#divModuleAnnouncements').hide();"></a>
-        <h1 id="h1AnnouncementsTitle" class="title">Modules</h1>
-    </div>
-    <div class="content">
-        <button id="buttonNewAnnouncement" type="button" style="width:100%; height:50px;" class="btn btn-outline-primary">New Announcement</button>
-        <div>
-            <ul id="ulModuleAnnouncementList" class="list-group">
+<div id="divModuleAnnouncements" style="display:none;">
 
-            </ul>
+    <div id="moduleAnnouncementImageDiv" class="moduleAnnouncementImageDiv">
+        <button class="back" onclick="$('#divModuleInfo').show();$('#divModuleAnnouncements').hide();"></button>
+        <img src="image/announcement_bg.png"/>
+        <button class="add"></button>
+        <div>
+            <h1>ANNOUNCEMENT</h1>
         </div>
+    </div>
+
+    <div>
+        <ul id="ulModuleAnnouncementList" class="list-group">
+
+        </ul>
     </div>
 </div>
 
 
-<div id = "divModuleWorkbin" style="display:none;">
-    <div class="homeTopHeader">
-        <a id="btnModuleWorkbinBack" class="return_page" onclick="$('#divModuleInfo').show();$('#divModuleWorkbin').hide();"></a>
-        <h1 id="h1WorkbinTitle" class="title">Modules</h1>
-    </div>
-    <div class="content">
-        <div>
-            <ul id="ulModuleWorkbinList" class="list-group">
+<div id="divModuleWorkbin" style="display:none;">
 
-            </ul>
+    <div class="moduleAnnouncementImageDiv">
+        <button class="back" onclick="$('#divModuleInfo').show();$('#divModuleWorkbin').hide();"></button>
+        <img src="image/announcement_bg.png"/>
+        <div>
+            <h1>WORKBIN</h1>
         </div>
+    </div>
+
+    <div>
+        <ul id="ulModuleWorkbinList" class="list-group">
+
+        </ul>
     </div>
 </div>
 
-<div id = "divModuleWorkbinFolder" style="display:none;">
-    <div class="homeTopHeader">
-        <a id="btnModuleWorkbinFolderBack" class="return_page" onclick="$('#divModuleWorkbin').show();$('#divModuleWorkbinFolder').hide();"></a>
-        <h1 id="h1WorkbinFolderTitle" class="title">Modules</h1>
-    </div>
-    <div class="content">
+<div id="divModuleWorkbinFolder" style="display:none;">
+    <div class="moduleAnnouncementImageDiv">
+        <button class="back" onclick="$('#divModuleWorkbin').show();$('#divModuleWorkbinFolder').hide();"></button>
+        <img src="image/announcement_bg.png"/>
         <div>
-            <ul id="ulModuleWorkbinFolderList" class="list-group">
-
-            </ul>
+            <h1>FILES</h1>
         </div>
+    </div>
+    <div>
+        <ul id="ulModuleWorkbinFolderList" class="list-group">
+
+        </ul>
     </div>
 </div>
 
-<div id = "divModuleMultiMediaFolder" style="display:none;">
-    <div class="homeTopHeader">
-        <a id="btnModuleMultiMediaFolderBack" class="return_page" onclick="$('#divModuleInfo').show();$('#divModuleMultiMediaFolder').hide();"></a>
-        <h1 id="h1MultiMediaFolderTitle" class="title">Media Folder</h1>
-    </div>
-    <div class="content">
+<div id="divModuleMultiMediaFolder" style="display:none;">
+    <div class="moduleAnnouncementImageDiv">
+        <button class="back" onclick="$('#divModuleInfo').show();$('#divModuleMultiMediaFolder').hide();"></button>
+        <img src="image/announcement_bg.png"/>
         <div>
-            <ul id="ulModuleMultiMediaFolderList" class="list-group">
-
-            </ul>
+            <h1>MULTIMEDIA</h1>
         </div>
+    </div>
+    <div>
+        <ul id="ulModuleMultiMediaFolderList" class="list-group">
+
+        </ul>
     </div>
 </div>
 
-<div id = "divModuleMultiMediaFolderContent" style="display:none;">
-    <div class="homeTopHeader">
-        <a id="btnModuleMultiMediaFolderContentBack" class="return_page" onclick="$('#divModuleMultiMediaFolder').show();$('#divModuleMultiMediaFolderContent').hide();"></a>
-        <h1 id="h1MultiMediaFolderContentTitle" class="title">Media Folder</h1>
-    </div>
-    <div class="content">
+<div id="divModuleMultiMediaFolderContent" style="display:none;">
+    <div class="moduleAnnouncementImageDiv">
+        <button class="back"
+                onclick="$('#divModuleMultiMediaFolder').show();$('#divModuleMultiMediaFolderContent').hide();"></button>
+        <img src="image/announcement_bg.png"/>
         <div>
-            <ul id="ulModuleMultiMediaFolderContentList" class="list-group">
-
-            </ul>
+            <h1>FILES</h1>
         </div>
+    </div>
+    <div>
+        <ul id="ulModuleMultiMediaFolderContentList" class="list-group">
+
+        </ul>
     </div>
 </div>
 
-<div id = "divModuleForumList" style="display:none;">
-    <div class="homeTopHeader">
-        <a id="btnModuleForumBack" class="return_page" onclick="$('#divModuleInfo').show();$('#divModuleForumList').hide();"></a>
-        <h1 id="h1MultiForumTitle" class="title">Forums</h1>
+<div id="divModuleForumList" style="display:none;">
+    <div class="moduleAnnouncementImageDiv">
+        <button class="back"
+                onclick="$('#divModuleInfo').show();$('#divModuleForumList').hide();"></button>
+        <img src="image/announcement_bg.png"/>
+        <div>
+            <h1>FORUM</h1>
+        </div>
     </div>
-    <div class="content">
         <div>
             <ul id="ulModuleForumList" class="workbin_list">
 
             </ul>
         </div>
-    </div>
 </div>
 
-<div id = "divModuleForumHeadingsThreadList" style="display:none;">
+<div id="divModuleForumHeadingsThreadList" style="display:none;">
     <div class="homeTopHeader">
-        <a id="btnModuleForumHeadingsThreadListBack" class="return_page" onclick="$('#divModuleForumList').show();$('#divModuleForumHeadingsThreadList').hide();"></a>
+        <a id="btnModuleForumHeadingsThreadListBack" class="return_page"
+           onclick="$('#divModuleForumList').show();$('#divModuleForumHeadingsThreadList').hide();"></a>
         <h1 id="h1MultiForumHeadingsThreadListTitle" class="title">Forums</h1>
     </div>
     <div class="content">
         <div>
-            <button id="buttonNewThread" type="button" style="width:100%; height:50px;" class="btn btn-outline-primary">New Thread</button>
+            <button id="buttonNewThread" type="button" style="width:100%; height:50px;" class="btn btn-outline-primary">
+                New Thread
+            </button>
         </div>
         <div>
             <ul id="ulModuleForumHeadingsThreadList" class="list-group">
@@ -257,7 +344,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
